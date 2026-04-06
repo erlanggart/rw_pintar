@@ -7,13 +7,19 @@ Aplikasi pendataan penduduk berbasis web dengan sistem multi-level akses (Super 
 - **Backend**: PHP Native (REST API)
 - **Database**: MySQL
 
-## Struktur Akun
-| Role | Username | Password | Hak Akses |
-|------|----------|----------|-----------|
-| Super Admin | `superadmin` | `password123` | Kelola Desa |
-| Admin Desa | `admin_desa` | `password123` | Kelola RW |
-| Admin RW | `admin_rw` | `password123` | Kelola RT |
-| Admin RT | `admin_rt` | `password123` | Kelola Penduduk & Aktivitas |
+## Informasi Akses
+
+- Aplikasi memakai sistem multi-role: Super Admin, Admin Desa, Admin RW, dan Admin RT.
+- Akun wilayah dibuat otomatis saat data Desa, RW, atau RT dibuat di sistem.
+- Kredensial login, pola username, dan password default tidak dicantumkan di README publik. Pengelolaan akses dilakukan oleh administrator sistem.
+
+### Hak akses per role
+| Role | Cakupan Akses |
+|------|---------------|
+| Super Admin | Kelola desa, RW, RT, akun pengguna, serta melihat dan mengelola seluruh data keluarga, penduduk, dan aktivitas |
+| Admin Desa | Kelola RW dan RT dalam desa, kelola akun RW/RT di desa, serta melihat dan mengelola data keluarga, penduduk, dan aktivitas dalam desa |
+| Admin RW | Kelola RT dalam RW, kelola akun RT dalam RW, serta melihat dan mengelola data keluarga, penduduk, dan aktivitas dalam RW |
+| Admin RT | Kelola data keluarga (KK), penduduk, dan aktivitas pada RT miliknya sendiri |
 
 ## Setup
 
@@ -50,8 +56,8 @@ Frontend berjalan di: `http://localhost:5173`
 | `/api/aktivitas.php` | GET/POST/DELETE | Aktivitas (Lahir/Mati/Pindah/Datang) |
 
 ## Fitur
-- **Super Admin**: Dashboard statistik, kelola data desa
-- **Admin Desa**: Kelola RW dalam desa, lihat data penduduk
-- **Admin RW**: Kelola RT dalam RW, lihat data penduduk
-- **Admin RT**: Input data keluarga (KK), input data penduduk (KTP), catat aktivitas penduduk (Lahir, Mati, Pindah, Datang)
-- Setiap penambahan Desa/RW/RT otomatis membuat akun admin terkait
+- **Super Admin**: Dashboard statistik, kelola desa, RW, RT, akun pengguna, serta seluruh data kependudukan
+- **Admin Desa**: Kelola RW dan RT dalam desa, kelola akun wilayah terkait, dan akses data desa sendiri
+- **Admin RW**: Kelola RT dalam RW, kelola akun RT, dan akses data RW sendiri
+- **Admin RT**: Input data keluarga (KK), input data penduduk (KTP), dan catat aktivitas penduduk (Lahir, Mati, Pindah, Datang) di RT sendiri
+- Setiap penambahan Desa/RW/RT otomatis membuat akun admin wilayah terkait dengan username unik
