@@ -1,0 +1,5 @@
+RewriteEngine On
+
+RewriteRule ^config/ - [F,L]
+RewriteRule ^scripts/ - [F,L]
+RewriteRule ^setup\.php$ - [F,L]

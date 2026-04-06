@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --color-cream: #f7f1e3;
+  --color-paper: #fffdf8;
+  --color-ink: #0f172a;
+  --color-muted: #475569;
+  --color-navy: #0b2239;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: linear-gradient(180deg, #fffdf8 0%, #f7f1e3 100%);
+  color: var(--color-ink);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.font-display {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.04em;
+}
+
+.landing-grid {
+  background-image:
+    linear-gradient(to right, rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at top center, black 40%, transparent 85%);
+}
+
+.glass-panel {
+  backdrop-filter: blur(18px);
+}
+
+.landing-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(12px);
+  opacity: 0.45;
+}
+
+.landing-orb-sand {
+  background: rgba(217, 119, 6, 0.18);
+}
+
+.landing-orb-teal {
+  background: rgba(13, 148, 136, 0.18);
+}
+
+.float-soft {
+  animation: floatSoft 9s ease-in-out infinite;
+}
+
+.animate-fade-rise {
+  animation: fadeRise 0.7s ease-out both;
+}
+
+.animate-fade-rise-delayed {
+  animation: fadeRise 0.9s ease-out both;
+}
+
+::selection {
+  background: rgba(217, 119, 6, 0.2);
+}
+
+@keyframes floatSoft {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+
+@keyframes fadeRise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@layer components {
+  .app-page {
+    @apply space-y-6 lg:space-y-8;
+  }
+
+  .app-panel {
+    @apply border border-white/60 bg-white/80;
+    border-radius: 18px;
+    box-shadow: 0 24px 60px -40px rgba(15, 23, 42, 0.3);
+    backdrop-filter: blur(14px);
+  }
+
+  .app-panel-header {
+    @apply flex flex-col gap-3 border-b border-slate-200/80 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6;
+  }
+
+  .app-panel-body {
+    @apply p-5 sm:p-6;
+  }
+
+  .app-panel-title {
+    @apply text-lg font-semibold text-slate-950;
+  }
+
+  .app-panel-description {
+    @apply mt-1 text-sm leading-6 text-slate-500;
+  }
+
+  .app-stat-card {
+    @apply border border-white/60 bg-white/80 p-5;
+    border-radius: 18px;
+    box-shadow: 0 24px 60px -42px rgba(15, 23, 42, 0.25);
+    backdrop-filter: blur(14px);
+  }
+
+  .app-button-primary,
+  .app-button-secondary,
+  .app-icon-button,
+  .app-filter-button {
+    transition: transform 150ms ease, background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .app-button-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-slate-900 px-5 py-3 text-sm font-semibold text-white;
+    border-radius: 9999px;
+    box-shadow: 0 18px 40px -24px rgba(15, 23, 42, 0.55);
+  }
+
+  .app-button-primary:hover {
+    background-color: #1e293b;
+    transform: translateY(-2px);
+  }
+
+  .app-button-secondary {
+    @apply inline-flex items-center justify-center gap-2 border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700;
+    border-radius: 9999px;
+  }
+
+  .app-button-secondary:hover {
+    @apply text-slate-950;
+    border-color: #0f172a;
+    transform: translateY(-2px);
+  }
+
+  .app-icon-button {
+    @apply inline-flex h-9 w-9 items-center justify-center border border-slate-200 bg-white text-slate-500;
+    border-radius: 9999px;
+  }
+
+  .app-icon-button:hover {
+    border-color: #0f172a;
+    color: #0f172a;
+    transform: translateY(-2px);
+  }
+
+  .app-label {
+    @apply mb-2 block text-sm font-medium text-slate-700;
+  }
+
+  .app-input,
+  .app-select,
+  .app-textarea,
+  .app-search {
+    @apply w-full border bg-white px-4 py-3 text-sm text-slate-900 outline-none;
+    border-radius: 18px;
+    border-color: rgba(148, 163, 184, 0.35);
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .app-input:focus,
+  .app-select:focus,
+  .app-textarea:focus,
+  .app-search:focus {
+    border-color: #0f172a;
+    box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.2);
+  }
+
+  .app-textarea {
+    min-height: 108px;
+    resize: vertical;
+  }
+
+  .app-search {
+    border-radius: 9999px;
+  }
+
+  .app-inline-actions {
+    @apply flex flex-col gap-3 pt-2 sm:flex-row;
+  }
+
+  .app-table-shell {
+    @apply overflow-hidden border border-slate-200/80 bg-white/85;
+    border-radius: 18px;
+    box-shadow: 0 24px 60px -42px rgba(15, 23, 42, 0.22);
+    backdrop-filter: blur(14px);
+  }
+
+  .app-table-scroll {
+    @apply overflow-x-auto;
+  }
+
+  .app-table {
+    @apply min-w-full text-sm;
+  }
+
+  .app-table thead {
+    @apply bg-slate-50/90;
+  }
+
+  .app-table th {
+    @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-slate-500;
+  }
+
+  .app-table td {
+    @apply px-4 py-4 align-top text-sm text-slate-700;
+  }
+
+  .app-table tbody tr {
+    @apply border-t border-slate-200/70;
+    transition: background-color 150ms ease;
+  }
+
+  .app-table tbody tr:hover {
+    @apply bg-slate-50/70;
+  }
+
+  .app-empty-row {
+    @apply px-4 py-10 text-center text-sm text-slate-500;
+  }
+
+  .app-chip {
+    @apply inline-flex items-center border border-slate-200 bg-white/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-slate-500;
+    border-radius: 9999px;
+  }
+
+  .app-badge {
+    @apply inline-flex items-center px-3 py-1 text-xs font-semibold;
+    border-radius: 9999px;
+  }
+
+  .app-badge-neutral {
+    @apply bg-slate-100 text-slate-700;
+  }
+
+  .app-badge-amber {
+    @apply bg-amber-100 text-amber-700;
+  }
+
+  .app-badge-emerald {
+    @apply bg-emerald-100 text-emerald-700;
+  }
+
+  .app-badge-sky {
+    @apply bg-sky-100 text-sky-700;
+  }
+
+  .app-badge-rose {
+    @apply bg-rose-100 text-rose-700;
+  }
+
+  .app-filter-button {
+    @apply inline-flex items-center justify-center border px-4 py-2.5 text-sm font-semibold;
+    border-radius: 9999px;
+  }
+
+  .app-filter-button-active {
+    @apply border-slate-900 bg-slate-900 text-white;
+    box-shadow: 0 18px 40px -24px rgba(15, 23, 42, 0.55);
+  }
+
+  .app-filter-button-idle {
+    @apply border-slate-200 bg-white text-slate-600;
+  }
+
+  .app-filter-button-idle:hover {
+    border-color: #0f172a;
+    color: #0f172a;
+  }
+}
