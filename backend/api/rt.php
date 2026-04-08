@@ -94,6 +94,7 @@ switch ($method) {
         $rwId = ($user['role'] === 'rw') ? $user['rw_id'] : ($input['rw_id'] ?? 0);
         $nomor = $input['nomor_rt'] ?? '';
         $ketua = $input['nama_ketua'] ?? '';
+        $alamatSekretariat = $input['alamat_sekretariat'] ?? '';
 
         if (empty($rwId) || empty($nomor)) {
             jsonResponse(['error' => 'RW ID dan nomor RT harus diisi'], 400);
@@ -106,8 +107,8 @@ switch ($method) {
         $db->begin_transaction();
 
         try {
-            $stmt = $db->prepare("INSERT INTO rt (rw_id, nomor_rt, nama_ketua) VALUES (?, ?, ?)");
-            $stmt->bind_param('iss', $rwId, $nomor, $ketua);
+            $stmt = $db->prepare("INSERT INTO rt (rw_id, nomor_rt, nama_ketua, alamat_sekretariat) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param('isss', $rwId, $nomor, $ketua, $alamatSekretariat);
 
             if (!$stmt->execute()) {
                 throw new RuntimeException('Gagal menambahkan RT');
@@ -142,6 +143,7 @@ switch ($method) {
         $rwId = ($user['role'] === 'rw') ? $user['rw_id'] : ($input['rw_id'] ?? 0);
         $nomor = $input['nomor_rt'] ?? '';
         $ketua = $input['nama_ketua'] ?? '';
+        $alamatSekretariat = $input['alamat_sekretariat'] ?? '';
 
         if (empty($id) || empty($rwId) || empty($nomor)) jsonResponse(['error' => 'ID, RW, dan nomor RT harus diisi'], 400);
 
@@ -155,8 +157,8 @@ switch ($method) {
         $db->begin_transaction();
 
         try {
-            $stmt = $db->prepare("UPDATE rt SET rw_id = ?, nomor_rt = ?, nama_ketua = ? WHERE id = ?");
-            $stmt->bind_param('issi', $rwId, $nomor, $ketua, $id);
+            $stmt = $db->prepare("UPDATE rt SET rw_id = ?, nomor_rt = ?, nama_ketua = ?, alamat_sekretariat = ? WHERE id = ?");
+            $stmt->bind_param('isssi', $rwId, $nomor, $ketua, $alamatSekretariat, $id);
 
             if (!$stmt->execute()) {
                 throw new RuntimeException('Gagal mengupdate RT');

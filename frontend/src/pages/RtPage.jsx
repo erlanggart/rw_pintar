@@ -10,6 +10,7 @@ const emptyForm = {
   rw_id: '',
   nomor_rt: '',
   nama_ketua: '',
+  alamat_sekretariat: '',
 };
 
 export default function RtPage() {
@@ -122,6 +123,7 @@ export default function RtPage() {
       rw_id: String(item.rw_id),
       nomor_rt: item.nomor_rt,
       nama_ketua: item.nama_ketua || '',
+      alamat_sekretariat: item.alamat_sekretariat || '',
     });
     setFormDesaId(linkedRw ? String(linkedRw.desa_id) : '');
     setShowForm(true);
@@ -252,6 +254,17 @@ export default function RtPage() {
                   onChange={(e) => setForm({ ...form, nama_ketua: e.target.value })}
                   className="app-input"
                   placeholder="Nama ketua RT"
+                />
+              </div>
+
+              <div className="md:col-span-3">
+                <label className="app-label">Alamat Sekretariat</label>
+                <input
+                  type="text"
+                  value={form.alamat_sekretariat}
+                  onChange={(e) => setForm({ ...form, alamat_sekretariat: e.target.value })}
+                  className="app-input"
+                  placeholder="Jl. Duren Baru Rt 003/07 Desa Susukan Kecamatan Bojonggede Kab.Bogor"
                 />
               </div>
 

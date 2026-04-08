@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { FiLock, FiSave, FiShield, FiUser } from 'react-icons/fi';
+import { FiLock, FiMapPin, FiSave, FiShield, FiUser } from 'react-icons/fi';
 import AppPageHeader from '../components/AppPageHeader';
 import PasswordInput from '../components/PasswordInput';
 import { useAuth } from '../contexts/AuthContext';
@@ -25,6 +25,8 @@ export default function ProfileSettingsPage() {
   const [passwordForm, setPasswordForm] = useState(emptyPasswordForm);
   const [savingUsername, setSavingUsername] = useState(false);
   const [savingPassword, setSavingPassword] = useState(false);
+  const [alamatSekretariat, setAlamatSekretariat] = useState(user?.alamat_sekretariat || '');
+  const [savingAlamat, setSavingAlamat] = useState(false);
 
   const handleUsernameSubmit = async (e) => {
     e.preventDefault();
@@ -63,6 +65,21 @@ export default function ProfileSettingsPage() {
       toast.error(err.response?.data?.error || 'Gagal memperbarui password');
     } finally {
       setSavingPassword(false);
+    }
+  };
+
+  const handleAlamatSubmit = async (e) => {
+    e.preventDefault();
+    setSavingAlamat(true);
+
+    try {
+      const res = await api.put('/profile.php', { alamat_sekretariat: alamatSekretariat });
+      setCurrentUser(res.data.user);
+      toast.success('Alamat sekretariat berhasil diperbarui');
+    } catch (err) {
+      toast.error(err.response?.data?.error || 'Gagal memperbarui alamat sekretariat');
+    } finally {
+      setSavingAlamat(false);
     }
   };
 
@@ -195,6 +212,37 @@ export default function ProfileSettingsPage() {
           </div>
         </section>
       </div>
+
+      {user?.role === 'rt' && (
+        <section className="app-panel">
+          <div className="app-panel-header">
+            <div>
+              <h3 className="app-panel-title">Alamat Sekretariat</h3>
+              <p className="app-panel-description">Atur alamat sekretariat RT Anda. Alamat ini akan ditampilkan pada kop surat pengantar.</p>
+            </div>
+          </div>
+
+          <div className="app-panel-body">
+            <form onSubmit={handleAlamatSubmit} className="space-y-4">
+              <div>
+                <label className="app-label">Alamat Sekretariat</label>
+                <textarea
+                  value={alamatSekretariat}
+                  onChange={(e) => setAlamatSekretariat(e.target.value)}
+                  className="app-input"
+                  rows={3}
+                  placeholder="Contoh: Jl. Melati No. 5 RT 003/RW 007 Desa Susukan"
+                />
+              </div>
+
+              <button type="submit" disabled={savingAlamat} className="app-button-primary">
+                <FiMapPin size={16} />
+                {savingAlamat ? 'Menyimpan...' : 'Simpan Alamat'}
+              </button>
+            </form>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

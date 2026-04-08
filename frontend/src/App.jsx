@@ -23,6 +23,7 @@ import AktivitasPindahPage from './pages/AktivitasPindahPage';
 import AktivitasPindahFormPage from './pages/AktivitasPindahFormPage';
 import AktivitasDatangPage from './pages/AktivitasDatangPage';
 import AktivitasDatangFormPage from './pages/AktivitasDatangFormPage';
+import SuratPengantarPage from './pages/SuratPengantarPage';
 import Layout from './components/Layout';
 
 function PrivateRoute({ children, roles }) {
@@ -61,6 +62,7 @@ function AppRoutes() {
       <Route path="/aktivitas/pindah/tambah" element={<PrivateRoute roles={['superadmin', 'desa', 'rw', 'rt']}><Layout><AktivitasPindahFormPage /></Layout></PrivateRoute>} />
       <Route path="/aktivitas/datang" element={<PrivateRoute roles={['superadmin', 'desa', 'rw', 'rt']}><Layout><AktivitasDatangPage /></Layout></PrivateRoute>} />
       <Route path="/aktivitas/datang/tambah" element={<PrivateRoute roles={['superadmin', 'desa', 'rw', 'rt']}><Layout><AktivitasDatangFormPage /></Layout></PrivateRoute>} />
+      <Route path="/surat-pengantar" element={<PrivateRoute roles={['superadmin', 'desa', 'rw', 'rt']}><Layout><SuratPengantarPage /></Layout></PrivateRoute>} />
       <Route path="*" element={<Navigate to={user ? '/dashboard' : '/'} />} />
     </Routes>
   );

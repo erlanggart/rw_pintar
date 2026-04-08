@@ -295,4 +295,66 @@ body {
     border-color: #0f172a;
     color: #0f172a;
   }
+
+  /* Laporan Bulanan - on-screen preview */
+  .laporan-page {
+    @apply mb-8 pb-6;
+    border-bottom: 1px dashed #cbd5e1;
+  }
+  .laporan-page:last-child {
+    @apply mb-0 pb-0;
+    border-bottom: none;
+  }
+  .laporan-header {
+    @apply text-center mb-4;
+  }
+  .laporan-header h2 {
+    @apply text-base font-bold uppercase tracking-wide text-slate-900;
+  }
+  .laporan-header p {
+    @apply text-sm text-slate-700;
+  }
+  .laporan-periode {
+    @apply text-right italic text-xs text-slate-500 mt-2;
+  }
+  .laporan-section-title {
+    @apply font-bold text-sm text-slate-800 mt-5 mb-1;
+  }
+  .laporan-table {
+    @apply w-full text-xs border-collapse;
+  }
+  .laporan-table th,
+  .laporan-table td {
+    @apply border border-slate-300 px-1.5 py-1 text-center align-middle;
+  }
+  .laporan-table th {
+    @apply bg-slate-100 font-semibold text-slate-700 whitespace-nowrap;
+    font-size: 0.68rem;
+  }
+  .laporan-table .text-left {
+    text-align: left;
+  }
+  .laporan-table .row-number td {
+    @apply italic text-slate-400 bg-slate-50;
+    font-size: 0.65rem;
+  }
+  .laporan-table .row-total td {
+    @apply font-bold bg-slate-50;
+  }
+  .laporan-table td:nth-child(2) {
+    min-width: 180px;
+  }
+  .laporan-ttd {
+    @apply flex justify-end mt-6;
+  }
+  .ttd-box {
+    @apply text-center text-xs text-slate-700;
+    min-width: 200px;
+  }
+  .ttd-space {
+    height: 50px;
+  }
+  .ttd-name {
+    @apply font-bold underline;
+  }
 }

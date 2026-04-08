@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { FiHome, FiMap, FiUsers, FiGrid, FiLayers, FiLogOut, FiMenu, FiX, FiSunrise, FiSunset, FiNavigation, FiMapPin, FiShield, FiSettings } from 'react-icons/fi';
+import { FiHome, FiMap, FiUsers, FiGrid, FiLayers, FiLogOut, FiMenu, FiX, FiSunrise, FiSunset, FiNavigation, FiMapPin, FiShield, FiSettings, FiFileText } from 'react-icons/fi';
 
 const menuItems = {
   superadmin: [
@@ -44,6 +44,7 @@ const menuItems = {
     { path: '/dashboard', label: 'Dashboard', mobileLabel: 'Dashboard', icon: FiHome },
     { path: '/keluarga', label: 'Data Keluarga', icon: FiUsers },
     { path: '/penduduk', label: 'Data Penduduk', icon: FiUsers },
+    { path: '/surat-pengantar', label: 'Surat Pengantar', mobileLabel: 'Surat', icon: FiFileText },
     { path: '/aktivitas/lahir', label: 'Kelahiran', mobileLabel: 'Lahir', icon: FiSunrise },
     { path: '/aktivitas/mati', label: 'Kematian', mobileLabel: 'Mati', icon: FiSunset },
     { path: '/aktivitas/pindah', label: 'Pindah', mobileLabel: 'Pindah', icon: FiNavigation },

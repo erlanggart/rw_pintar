@@ -6,8 +6,8 @@ $currentUser = authenticate();
 $method = $_SERVER['REQUEST_METHOD'];
 $db = getDB();
 
-function profileResponse($user) {
-    return [
+function profileResponse($user, $db) {
+    $data = [
         'id' => (int) $user['id'],
         'username' => $user['username'],
         'nama_lengkap' => $user['nama_lengkap'],
@@ -16,11 +16,21 @@ function profileResponse($user) {
         'rw_id' => $user['rw_id'] !== null ? (int) $user['rw_id'] : null,
         'rt_id' => $user['rt_id'] !== null ? (int) $user['rt_id'] : null,
     ];
+
+    if ($user['role'] === 'rt' && $user['rt_id'] !== null) {
+        $stmt = $db->prepare("SELECT alamat_sekretariat FROM rt WHERE id = ? LIMIT 1");
+        $stmt->bind_param('i', $user['rt_id']);
+        $stmt->execute();
+        $rt = $stmt->get_result()->fetch_assoc();
+        $data['alamat_sekretariat'] = $rt ? ($rt['alamat_sekretariat'] ?? '') : '';
+    }
+
+    return $data;
 }
 
 switch ($method) {
     case 'GET':
-        jsonResponse(['user' => profileResponse($currentUser)]);
+        jsonResponse(['user' => profileResponse($currentUser, $db)]);
         break;
 
     case 'PUT':
@@ -28,6 +38,7 @@ switch ($method) {
         $username = normalizeUsername($input['username'] ?? $currentUser['username']);
         $currentPassword = (string) ($input['current_password'] ?? '');
         $newPassword = (string) ($input['new_password'] ?? '');
+        $alamatSekretariat = isset($input['alamat_sekretariat']) ? trim((string) $input['alamat_sekretariat']) : null;
 
         if ($username === '') {
             jsonResponse(['error' => 'Username harus diisi'], 400);
@@ -73,6 +84,12 @@ switch ($method) {
             jsonResponse(['error' => 'Gagal memperbarui profil'], 500);
         }
 
+        if ($alamatSekretariat !== null && $currentUser['role'] === 'rt' && $currentUser['rt_id'] !== null) {
+            $stmtRt = $db->prepare("UPDATE rt SET alamat_sekretariat = ? WHERE id = ?");
+            $stmtRt->bind_param('si', $alamatSekretariat, $currentUser['rt_id']);
+            $stmtRt->execute();
+        }
+
         $stmt = $db->prepare("SELECT id, username, nama_lengkap, role, desa_id, rw_id, rt_id FROM users WHERE id = ? LIMIT 1");
         $stmt->bind_param('i', $currentUser['id']);
         $stmt->execute();
@@ -80,7 +97,7 @@ switch ($method) {
 
         jsonResponse([
             'message' => 'Profil berhasil diperbarui',
-            'user' => profileResponse($updatedUser),
+            'user' => profileResponse($updatedUser, $db),
         ]);
         break;
 

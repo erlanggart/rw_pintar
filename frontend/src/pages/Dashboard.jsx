@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../utils/api';
-import { FiArrowUpRight, FiActivity, FiGrid, FiLayers, FiMap, FiUserCheck, FiUsers } from 'react-icons/fi';
+import { FiArrowUpRight, FiActivity, FiGrid, FiLayers, FiMap, FiUserCheck, FiUsers, FiFileText } from 'react-icons/fi';
 import AppPageHeader from '../components/AppPageHeader';
+import LaporanBulanan from '../components/LaporanBulanan';
 
 const statIcons = {
   total_desa: FiMap,
@@ -129,6 +131,26 @@ export default function Dashboard() {
             </div>
           </div>
         </section>
+      )}
+
+      {user?.role === 'rt' && (
+        <section className="app-panel">
+          <div className="app-panel-header">
+            <div>
+              <h3 className="app-panel-title">Layanan Surat</h3>
+              <p className="app-panel-description">Buat surat pengantar untuk keperluan warga di wilayah Anda.</p>
+            </div>
+          </div>
+          <div className="app-panel-body">
+            <Link to="/surat-pengantar" className="app-btn app-btn-primary inline-flex items-center gap-2">
+              <FiFileText size={16} /> Buat Surat Pengantar
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {(user?.role === 'rt' || user?.role === 'rw') && (
+        <LaporanBulanan userRole={user.role} rwId={user.rw_id} />
       )}
     </div>
   );
