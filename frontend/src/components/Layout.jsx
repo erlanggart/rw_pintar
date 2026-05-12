@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { FiHome, FiMap, FiUsers, FiGrid, FiLayers, FiLogOut, FiMenu, FiX, FiSunrise, FiSunset, FiNavigation, FiMapPin, FiShield, FiSettings, FiFileText } from 'react-icons/fi';
+import { FiHome, FiMap, FiUsers, FiGrid, FiLayers, FiLogOut, FiMenu, FiX, FiSunrise, FiSunset, FiNavigation, FiMapPin, FiShield, FiSettings, FiFileText, FiDollarSign, FiTrendingUp } from 'react-icons/fi';
 
 const menuItems = {
   superadmin: [
@@ -16,6 +16,8 @@ const menuItems = {
     { path: '/aktivitas/mati', label: 'Kematian', mobileLabel: 'Mati', icon: FiSunset },
     { path: '/aktivitas/pindah', label: 'Pindah', mobileLabel: 'Pindah', icon: FiNavigation },
     { path: '/aktivitas/datang', label: 'Kedatangan', mobileLabel: 'Datang', icon: FiMapPin },
+    { path: '/kas-rt/iuran', label: 'Iuran Warga', mobileLabel: 'Iuran', icon: FiDollarSign },
+    { path: '/kas-rt', label: 'Kas RT', mobileLabel: 'Kas RT', icon: FiTrendingUp },
   ],
   desa: [
     { path: '/dashboard', label: 'Dashboard', mobileLabel: 'Dashboard', icon: FiHome },
@@ -28,6 +30,8 @@ const menuItems = {
     { path: '/aktivitas/mati', label: 'Kematian', mobileLabel: 'Mati', icon: FiSunset },
     { path: '/aktivitas/pindah', label: 'Pindah', mobileLabel: 'Pindah', icon: FiNavigation },
     { path: '/aktivitas/datang', label: 'Kedatangan', mobileLabel: 'Datang', icon: FiMapPin },
+    { path: '/kas-rt/iuran', label: 'Iuran Warga', mobileLabel: 'Iuran', icon: FiDollarSign },
+    { path: '/kas-rt', label: 'Kas RT', mobileLabel: 'Kas RT', icon: FiTrendingUp },
   ],
   rw: [
     { path: '/dashboard', label: 'Dashboard', mobileLabel: 'Dashboard', icon: FiHome },
@@ -39,12 +43,16 @@ const menuItems = {
     { path: '/aktivitas/mati', label: 'Kematian', mobileLabel: 'Mati', icon: FiSunset },
     { path: '/aktivitas/pindah', label: 'Pindah', mobileLabel: 'Pindah', icon: FiNavigation },
     { path: '/aktivitas/datang', label: 'Kedatangan', mobileLabel: 'Datang', icon: FiMapPin },
+    { path: '/kas-rt/iuran', label: 'Iuran Warga', mobileLabel: 'Iuran', icon: FiDollarSign },
+    { path: '/kas-rt', label: 'Kas RT', mobileLabel: 'Kas RT', icon: FiTrendingUp },
   ],
   rt: [
     { path: '/dashboard', label: 'Dashboard', mobileLabel: 'Dashboard', icon: FiHome },
     { path: '/keluarga', label: 'Data Keluarga', icon: FiUsers },
     { path: '/penduduk', label: 'Data Penduduk', icon: FiUsers },
     { path: '/surat-pengantar', label: 'Surat Pengantar', mobileLabel: 'Surat', icon: FiFileText },
+    { path: '/kas-rt/iuran', label: 'Iuran Warga', mobileLabel: 'Iuran', icon: FiDollarSign },
+    { path: '/kas-rt', label: 'Kas RT', mobileLabel: 'Kas RT', icon: FiTrendingUp },
     { path: '/aktivitas/lahir', label: 'Kelahiran', mobileLabel: 'Lahir', icon: FiSunrise },
     { path: '/aktivitas/mati', label: 'Kematian', mobileLabel: 'Mati', icon: FiSunset },
     { path: '/aktivitas/pindah', label: 'Pindah', mobileLabel: 'Pindah', icon: FiNavigation },
@@ -67,8 +75,10 @@ const mobilePrimaryOrder = [
   '/aktivitas/datang',
 ];
 
+const EXACT_MATCH_PATHS = new Set(['/dashboard', '/kas-rt']);
+
 function isItemActive(pathname, itemPath) {
-  if (itemPath === '/dashboard') {
+  if (EXACT_MATCH_PATHS.has(itemPath)) {
     return pathname === itemPath;
   }
 
